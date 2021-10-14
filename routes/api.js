@@ -21,16 +21,16 @@ router.put("/workouts/:id",  async (req, res) => {
       _id: req.params.id
     }
   );
-  console.log(exercises)
   exercises.push(body);
-  console.log(exercises)
-  Workout.update(
+  totalDuration = exercises.reduce((a,b) => a + (b['duration']),0)
+  Workout.updateOne(
     {
       _id: req.params.id
     },
     {
       $set: {
-        exercises
+        exercises,
+        totalDuration
       }
     },
 
@@ -50,6 +50,7 @@ router.put("/workouts/:id",  async (req, res) => {
 router.post("/workouts", ({ body }, res) => {
   Workout.create(body)
     .then(dbworkout => {
+      console.log(dbworkout)
       res.json(dbworkout);
     })
     .catch(err => {
