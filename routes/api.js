@@ -14,22 +14,23 @@ router.get("/workouts", (req, res) => {
 });
 
 // Update a workout with the new exercises
-router.put("/workouts/:id", async (req, res) => {
+router.put("/workouts/:id",  async (req, res) => {
   const {body} = req
-  console.log("body")
-  console.log(body)
-  const exercises = Workout.find(
+  const {exercises} = await Workout.findOne(
     {
       _id: req.params.id
     }
-  )
+  );
+  console.log(exercises)
+  exercises.push(body);
+  console.log(exercises)
   Workout.update(
     {
       _id: req.params.id
     },
     {
       $set: {
-        body 
+        exercises
       }
     },
 
