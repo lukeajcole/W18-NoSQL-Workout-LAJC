@@ -3,7 +3,15 @@ const Workout = require("../models/workout.js");
 
 //Get all of the Workouts
 router.get("/workouts", (req, res) => {
-  Workout.find({})
+  Workout.aggregate([
+    {
+      $addFields: {
+        totalDuration: {
+          $sum: '$exercises.duration',
+        },
+      },
+    },
+  ])
     .sort({ date: -1 })
     .then(dbworkout => {
       res.json(dbworkout);
@@ -61,8 +69,17 @@ router.post("/workouts", ({ body }, res) => {
 //get workouts in range
 router.get("/workouts/range", (req, res) => {
   const sevenDay =  new Date(new Date().setDate(new Date().getDate() - 7))
-  Workout.find({day: {$gte: sevenDay}})
+  Workout.aggregate([
+    {
+      $addFields: {
+        totalDuration: {
+          $sum: '$exercises.duration',
+        },
+      },
+    },
+  ])
   .sort({ date: -1 })
+  .limit(7)
   .then(dbworkout => {
     res.json(dbworkout);
   })
