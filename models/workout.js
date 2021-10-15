@@ -37,14 +37,15 @@ const workoutSchema = new Schema({
     type: Date,
     default: Date.now
   }
-  ,
-  totalDuration: {
-    type: Number, 
-    required: true,
-    default: function(){
-      return this.exercises.reduce((a,b) => a + (b['duration']),0)
-    }
-}});
+  // ,
+  // totalDuration: {
+  //   type: Number, 
+  //   required: true,
+  //   default: function(){
+  //     return this.exercises.reduce((a,b) => a + (b['duration']),0)
+  //   }
+// }
+});
 
 
 const Workout = mongoose.model("workout", workoutSchema);
