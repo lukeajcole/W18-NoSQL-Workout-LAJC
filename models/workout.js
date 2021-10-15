@@ -28,6 +28,10 @@ const exerSchema =  new Schema({
   duration: {
     type: Number,
     trim: true,
+  },
+  distance: {
+    type: Number,
+    trim: true,
   }
 
 })
@@ -37,14 +41,6 @@ const workoutSchema = new Schema({
     type: Date,
     default: Date.now
   }
-  // ,
-  // totalDuration: {
-  //   type: Number, 
-  //   required: true,
-  //   default: function(){
-  //     return this.exercises.reduce((a,b) => a + (b['duration']),0)
-  //   }
-// }
 });
 
 
